@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CPU Scheduling Simulator</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <h1>CPU Scheduling Simulator</h1>
+
+  <div class="controls">
+    <label>Algorithm:
+      <select id="algorithm">
+        <option value="">-- Select Algorithm --</option>
+        <option value="FCFS">FCFS (First Come First Serve)</option>
+        <option value="SJF">SJF (Shortest Job First)</option>
+        <option value="SRTF">SRTF (Shortest Remaining Time First)</option>
+        <option value="PriorityNP">Priority (Non-Preemptive)</option>
+        <option value="PriorityP">Priority (Preemptive)</option>
+        <option value="RR">Round Robin</option>
+      </select>
+    </label>
+    <label id="quantumLabel" style="display:none;">
+      Time Quantum:
+      <input type="number" id="quantum" min="1" value="2">
+    </label>
+  </div>
+
+  <table id="inputTable">
+    <thead>
+      <tr>
+        <th>PID</th>
+        <th>Arrival Time</th>
+        <th>Burst Time</th>
+        <th id="priorityHeader">Priority</th>
+      </tr>
+    </thead>
+    <tbody id="processTableBody"></tbody>
+  </table>
+
+  <div class="buttons">
+    <button onclick="addProcess()">Add Process</button>
+    <button onclick="removeLastProcess()">Remove Last</button>
+    <button onclick="simulate()">Simulate</button>
+    <button onclick="compareAlgorithms()">Compare All Algorithms</button>
+    <button onclick="resetAll()" style="background-color: #e74c3c;">Reset All</button>
+  </div>
+
+  <div id="output">
+    <h2>Gantt Chart</h2>
+    <div id="ganttChart"></div>
+
+    <h2>Process Metrics</h2>
+    <table id="resultTable">
+      <thead>
+        <tr>
+          <th>PID</th>
+          <th>Arrival</th>
+          <th>Burst</th>
+          <th>Priority</th>
+          <th>Completion</th>
+          <th>Turnaround</th>
+          <th>Waiting</th>
+          <th>Response</th>
+        </tr>
+      </thead>
+      <tbody id="metricsBody"></tbody>
+    </table>
+
+    <div id="averages"></div>
+    <div id="recommendation"></div>
+
+    <h2>Algorithm Comparison</h2>
+    <table id="comparisonTable">
+      <thead>
+        <tr>
+          <th>Algorithm</th>
+          <th>Avg Turnaround</th>
+          <th>Avg Waiting</th>
+          <th>CPU Utilization</th>
+          <th>Throughput</th>
+        </tr>
+      </thead>
+      <tbody id="comparisonResults"></tbody>
+    </table>
+
+    <div class="chart-container">
+      <div class="chart-box">
+        <div class="chart-title">Performance Metrics Comparison</div>
+        <canvas id="metricsChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">CPU Utilization (%)</div>
+        <canvas id="cpuChart"></canvas>
+      </div>
+      <div class="chart-box" style="flex: 100%;">
+        <div class="chart-title">Throughput (Higher = Better)</div>
+        <canvas id="throughputChart"></canvas>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
